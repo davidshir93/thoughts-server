@@ -1,0 +1,28 @@
+{
+	"name": "thoughts-server",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"type": "module",
+	"scripts": {
+		"backend": "nodemon index.js",
+		"build": "node index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/davidshir93/thoughts-server.git"
+	},
+	"author": "david shir",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/davidshir93/thoughts-server/issues"
+	},
+	"homepage": "https://github.com/davidshir93/thoughts-server#readme",
+	"dependencies": {
+		"axios": "^1.4.0",
+		"cors": "^2.8.5",
+		"dotenv": "^16.0.3",
+		"express": "^4.18.2",
+		"nodemon": "^2.0.22"
+	}
+}
