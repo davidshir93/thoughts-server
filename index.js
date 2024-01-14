@@ -32,23 +32,26 @@ const __dirname = dirname(new URL(import.meta.url).pathname);
 
 app.get('/distortions', async (req, res) => {
 	console.log(req.query.sentence);
-	const response = await axios.post(
-		'https://api.openai.com/v1/completions',
-		{
-			prompt: `create a numbered list of titles of cognitive distortions can be found in this sentence: "${req.query.sentence}"`,
-			model: 'text-curie-001',
-			max_tokens: 1050,
-			n: 1,
-			stop: ['{}'],
-		},
-		{
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${process.env.CHAT_GPT_API_KEY}`,
+	try {
+		const response = await axios.post(
+			'https://api.openai.com/v1/completions',
+			{
+				prompt: `create a numbered list of titles of cognitive distortions can be found in this sentence: "${req.query.sentence}"`,
+				model: 'text-curie-001',
+				max_tokens: 1050,
+				n: 1,
+				stop: ['{}'],
 			},
-		}
-	);
-
+			{
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${process.env.CHAT_GPT_API_KEY}`,
+				},
+			}
+		);
+	} catch (err) {
+		console.log(err);
+	}
 	console.log(response.data.choices);
 	res.json(response.data.choices);
 });
