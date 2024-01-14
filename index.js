@@ -37,7 +37,7 @@ app.get('/distortions', async (req, res) => {
 			'https://api.openai.com/v1/completions',
 			{
 				prompt: `create a numbered list of titles of cognitive distortions can be found in this sentence: "${req.query.sentence}"`,
-				model: 'text-curie-001',
+				model: 'gpt-3.5-turbo-1106',
 				max_tokens: 1050,
 				n: 1,
 				stop: ['{}'],
