@@ -32,8 +32,9 @@ const __dirname = dirname(new URL(import.meta.url).pathname);
 
 app.get("/distortions", async (req, res) => {
   console.log(req.query.sentence);
+  let response;
   try {
-    const response = await axios.post(
+    response = await axios.post(
       "https://api.openai.com/v1/completions",
       {
         prompt: `create a numbered list of titles of cognitive distortions can be found in this sentence: "${req.query.sentence}"`,
@@ -49,11 +50,12 @@ app.get("/distortions", async (req, res) => {
         },
       }
     );
+    console.log(response.data.choices);
+    res.json(response.data.choices);
   } catch (err) {
     console.log(err);
+    res.status(500).send("Internal Server Error");
   }
-  console.log(response.data.choices);
-  res.json(response.data.choices);
 });
 
 app.listen(port, () => console.log("Server is listening on port " + port));
