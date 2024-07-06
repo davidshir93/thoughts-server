@@ -1,18 +1,18 @@
 const port = process.env.PORT || 8000;
-import express from 'express';
-import cors from 'cors';
-import axios from 'axios';
-import dotenv from 'dotenv';
-if (process.env.NODE_ENV !== 'production') {
-	dotenv.config();
+import express from "express";
+import cors from "cors";
+import axios from "axios";
+import dotenv from "dotenv";
+if (process.env.NODE_ENV !== "production") {
+  dotenv.config();
 }
-import path from 'path';
+import path from "path";
 
 const app = express();
 
 app.use(cors());
 
-import { dirname } from 'path';
+import { dirname } from "path";
 
 const __dirname = dirname(new URL(import.meta.url).pathname);
 
@@ -30,30 +30,30 @@ const __dirname = dirname(new URL(import.meta.url).pathname);
 // 	});
 // }
 
-app.get('/distortions', async (req, res) => {
-	console.log(req.query.sentence);
-	try {
-		const response = await axios.post(
-			'https://api.openai.com/v1/completions',
-			{
-				prompt: `create a numbered list of titles of cognitive distortions can be found in this sentence: "${req.query.sentence}"`,
-				model: 'gpt-3.5-turbo-1106',
-				max_tokens: 1050,
-				n: 1,
-				stop: ['{}'],
-			},
-			{
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${process.env.CHAT_GPT_API_KEY}`,
-				},
-			}
-		);
-	} catch (err) {
-		console.log(err);
-	}
-	console.log(response.data.choices);
-	res.json(response.data.choices);
+app.get("/distortions", async (req, res) => {
+  console.log(req.query.sentence);
+  try {
+    const response = await axios.post(
+      "https://api.openai.com/v1/completions",
+      {
+        prompt: `create a numbered list of titles of cognitive distortions can be found in this sentence: "${req.query.sentence}"`,
+        model: "gpt-3.5-turbo",
+        max_tokens: 1050,
+        n: 1,
+        stop: ["{}"],
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.CHAT_GPT_API_KEY}`,
+        },
+      }
+    );
+  } catch (err) {
+    console.log(err);
+  }
+  console.log(response.data.choices);
+  res.json(response.data.choices);
 });
 
-app.listen(port, () => console.log('Server is listening on port ' + port));
+app.listen(port, () => console.log("Server is listening on port " + port));
