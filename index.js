@@ -35,13 +35,16 @@ app.get("/distortions", async (req, res) => {
   let response;
   try {
     response = await axios.post(
-      "https://api.openai.com/v1/completions",
+      "https://api.openai.com/v1/chat/completions",
       {
-        prompt: `create a numbered list of titles of cognitive distortions can be found in this sentence: "${req.query.sentence}"`,
         model: "gpt-3.5-turbo",
-        max_tokens: 1050,
-        n: 1,
-        stop: ["{}"],
+        messages: [
+          {
+            role: "user",
+            content: `create a numbered list of titles of cognitive distortions can be found in this sentence: "${req.query.sentence}"`,
+          },
+        ],
+        temperature: 0.7,
       },
       {
         headers: {
@@ -54,6 +57,10 @@ app.get("/distortions", async (req, res) => {
     res.json(response.data.choices);
   } catch (err) {
     console.log(err);
+    console.error(
+      "Error occurred:",
+      err.response ? err.response.data : err.message
+    );
     res.status(500).send("Internal Server Error");
   }
 });
