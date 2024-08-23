@@ -41,7 +41,7 @@ app.get("/distortions", async (req, res) => {
         messages: [
           {
             role: "user",
-            content: `create a numbered list of titles of cognitive distortions can be found in this sentence: "${req.query.sentence}"`,
+            content: `create a numbered list of titles of cognitive distortions can be found in the following sentence, but make sure it is 100% appears in the sentence: "${req.query.sentence}"`,
           },
         ],
         temperature: 0.7,
