@@ -37,7 +37,7 @@ app.get("/distortions", async (req, res) => {
     response = await axios.post(
       "https://api.openai.com/v1/chat/completions",
       {
-        model: "gpt-3.5-turbo",
+        model: "gpt-4o-mini",
         messages: [
           {
             role: "user",
@@ -56,12 +56,10 @@ app.get("/distortions", async (req, res) => {
     console.log(response.data.choices);
     res.json(response.data.choices);
   } catch (err) {
-    console.log(err);
-    console.error(
-      "Error occurred:",
-      err.response ? err.response.data : err.message
-    );
-    res.status(500).send("Internal Server Error");
+    const status = err.response ? err.response.status : 500;
+    const detail = err.response ? err.response.data : err.message;
+    console.error("OpenAI request failed:", status, detail);
+    res.status(status).json({ error: detail });
   }
 });
 
